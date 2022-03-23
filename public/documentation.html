@@ -2,3 +2,125 @@
 <h1>EMDB (Etta's Movie Database)</h1>
 
 <p>This is a REST API for an application called EMDB that stores data about different types of movies.</p>
+
+<h2>URL Endpoints</h2>
+<table>
+    <tr>
+        <th>Request</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>Request Data Format</th>
+        <th>Response Data Body Format</th>
+    </tr>
+    <tr>
+        <th>Return a list of all movies to the user</th>
+        <th>/movies</th>
+        <th>GET</th>
+        <th>None</th>
+        <th>A JSON object holding data about all movies</th>
+    </tr>
+    <tr>
+        <th>Get data about a single movie by name</th>
+        <th>/movies/[TITLE]</th>
+        <th>GET</th>
+        <th>None</th>
+        <th>A JSON object holding data about a single movie, containing a description, genre, director, image URL, and whether it's featured or not. 
+            Example: <br>
+            {<br>
+                "Title":"JoJo Rabbit",<br>
+                "Description":"A young German boy in the Hitler Youth whose hero and imaginary friend is the country's dictator is shocked to discover that his mother is hiding a Jewish girl in their home.",<br>
+                "Genre": {<br>
+                    "Name":"Comedy",<br>
+                    "Description":"Funny, humorous, satirical, or lighthearted fiction or non-fiction movies."<br>
+                },<br>
+                "Director": {<br>
+                    "Name":"Taika Watiti",<br>
+                    "Bio":"Taika hails from the Raukokore region of the East Coast of New Zealand. He has been in the film industry for several years as an actor, writer, and director. He is most known for his work directing Thor: Ragnarok (2017) and JoJo Rabbit (2019), for which he won an Oscar for Best Adapted Screenplay.",<br>
+                    "Birth Year":1975<br>
+                },<br>
+                "ImageURL":"this is an image URL",<br>
+                "Featured":false<br>
+            }
+        </th>
+    </tr>
+    <tr>
+        <th>Get data about a single genre by name</th>
+        <th>/movies/genre/[NAME]</th>
+        <th>GET</th>
+        <th>None</th>
+        <th>A JSON object holding data about a single genre, including its description. 
+            Example: <br>
+            {<br>
+                "Name":"Comedy",
+                "Description":"Funny, humorous, satirical, or lighthearted fiction or non-fiction movies."<br>
+            }
+        </th>
+    </tr>
+    <tr>
+        <th>Get data about a single director by name</th>
+        <th>/movies/director/[NAME]</th>
+        <th>GET</th>
+        <th>None</th>
+        <th>A JSON object holding data about a single director, containing a name, bio, birth year, and death year if one. 
+            Example: <br>
+            {<br>
+                "Name":"Taika Watiti",<br>
+                "Bio":"Taika hails from the Raukokore region of the East Coast of New Zealand. He has been in the film industry for several years as an actor, writer, and director. He is most known for his work directing Thor: Ragnarok (2017) and JoJo Rabbit (2019), for which he won an Oscar for Best Adapted Screenplay.",<br>
+                "Birth Year":1975<br>
+            }
+        </th>
+    </tr>
+    <tr>
+        <th>Add a user</th>
+        <th>/users</th>
+        <th>POST</th>
+        <th>A JSON object holding data about the user to add, formatted like so: <br>
+            {<br>
+                "Name": "Etta"<br>
+                "favoriteMovies": []<br>
+            }
+        </th>
+        <th>A JSON object holding data about the user that was added, including an ID. 
+            Example: <br>
+            {<br>
+                id: 1,<br>
+                name: "Etta",<br>
+                favoriteMovies: []<br>
+            }
+        </th>
+    </tr>
+    <tr>
+        <th>Update user's name</th>
+        <th>/users/[ID]</th>
+        <th>PUT</th>
+        <th>A JSON object holding the data to be updated. Example:<br>
+            {<br>
+                "id": 1,<br>
+                "name": "Etta Riley",<br>
+                "favoriteMovies": []<br>
+            }
+        </th>
+        <th>A text message indicating the name that was changed.</th>
+    </tr>
+    <tr>
+        <th>Add movie to user's list of favorites</th>
+        <th>/users/[ID]/[MOVIE-TITLE]</th>
+        <th>POST</th>
+        <th>None</th>
+        <th>A success message indicating the message was changed</th>
+    </tr>
+    <tr>
+        <th>Remove movie from user's list of favorites</th>
+        <th>/users/[ID]/[MOVIE-TITLE]</th>
+        <th>DELETE</th>
+        <th>None</th>
+        <th>A text message indicating whether the movie was successfully removed.</th>
+    </tr>
+    <tr>
+        <th>Remove user</th>
+        <th>/users/[ID]</th>
+        <th>DELETE</th>
+        <th>None</th>
+        <th>A text message indicating whether the user was successfully deregistered.</th>
+    </tr>
+</table>
