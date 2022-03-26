@@ -36,7 +36,7 @@
                 "Director": {<br>
                     "Name":"Taika Watiti",<br>
                     "Bio":"Taika hails from the Raukokore region of the East Coast of New Zealand. He has been in the film industry for several years as an actor, writer, and director. He is most known for his work directing Thor: Ragnarok (2017) and JoJo Rabbit (2019), for which he won an Oscar for Best Adapted Screenplay.",<br>
-                    "Birth Year":1975<br>
+                    "Birth":1975<br>
                 },<br>
                 "ImageURL":"this is an image URL",<br>
                 "Featured":false<br>
@@ -66,7 +66,7 @@
             {<br>
                 "Name":"Taika Watiti",<br>
                 "Bio":"Taika hails from the Raukokore region of the East Coast of New Zealand. He has been in the film industry for several years as an actor, writer, and director. He is most known for his work directing Thor: Ragnarok (2017) and JoJo Rabbit (2019), for which he won an Oscar for Best Adapted Screenplay.",<br>
-                "Birth Year":1975<br>
+                "Birth":1975<br>
             }
         </td>
     </tr>
@@ -76,16 +76,22 @@
         <td>POST</td>
         <td>A JSON object holding data about the user to add, formatted like so: <br>
             {<br>
-                "Name": "Etta"<br>
-                "favoriteMovies": []<br>
+                "Username": "Etta"<br>
+                "Password": "pass1234"<br>
+                "Email": "example@example.com"<br>
+                "Birthday": 1993-07-02<br>
+                "FavoriteMovies": []<br>
             }
         </td>
         <td>A JSON object holding data about the user that was added, including an ID. 
             Example: <br>
             {<br>
-                id: 1,<br>
-                name: "Etta",<br>
-                favoriteMovies: []<br>
+                _id: ObjectID("1234"),
+                "Username": "Etta"<br>
+                "Password": "pass1234"<br>
+                "Email": "example@example.com"<br>
+                "Birthday": 1993-07-02<br>
+                "FavoriteMovies": []<br>
             }
         </td>
     </tr>
@@ -95,9 +101,8 @@
         <td>PUT</td>
         <td>A JSON object holding the data to be updated. Example:<br>
             {<br>
-                "id": 1,<br>
-                "name": "Etta Riley",<br>
-                "favoriteMovies": []<br>
+                _id: ObjectID("1234"),
+                "Username": "EttaRiley"<br>
             }
         </td>
         <td>A text message indicating the name that was changed.</td>
