@@ -17,10 +17,10 @@
         <td>/movies</td>
         <td>GET</td>
         <td>None</td>
-        <td>A JSON object holding data about all movies</td>
+        <td>A JSON object holding data about all movies (See row below for movie format example)</td>
     </tr>
     <tr style="border: 1px solid black;">
-        <td>Get data about a single movie by name</td>
+        <td>Get data about a single movie by title</td>
         <td>/movies/[TITLE]</td>
         <td>GET</td>
         <td>None</td>
@@ -36,16 +36,17 @@
                 "Director": {<br>
                     "Name":"Taika Watiti",<br>
                     "Bio":"Taika hails from the Raukokore region of the East Coast of New Zealand. He has been in the film industry for several years as an actor, writer, and director. He is most known for his work directing Thor: Ragnarok (2017) and JoJo Rabbit (2019), for which he won an Oscar for Best Adapted Screenplay.",<br>
-                    "Birth":1975<br>
+                    "Birth":"1975-01-01"<br>
                 },<br>
-                "ImageURL":"this is an image URL",<br>
+                "ReleaseYear": "2019-01-01"
+                "ImageURL":"jojorabbit.png",<br>
                 "Featured":false<br>
             }
         </td>
     </tr>
     <tr style="border: 1px solid black;">
         <td>Get data about a single genre by name</td>
-        <td>/movies/genre/[NAME]</td>
+        <td>genre/[NAME]</td>
         <td>GET</td>
         <td>None</td>
         <td>A JSON object holding data about a single genre, including its description. 
@@ -58,7 +59,7 @@
     </tr>
     <tr style="border: 1px solid black;">
         <td>Get data about a single director by name</td>
-        <td>/movies/director/[NAME]</td>
+        <td>/director/[NAME]</td>
         <td>GET</td>
         <td>None</td>
         <td>A JSON object holding data about a single director, containing a name, bio, birth year, and death year if one. 
@@ -66,7 +67,7 @@
             {<br>
                 "Name":"Taika Watiti",<br>
                 "Bio":"Taika hails from the Raukokore region of the East Coast of New Zealand. He has been in the film industry for several years as an actor, writer, and director. He is most known for his work directing Thor: Ragnarok (2017) and JoJo Rabbit (2019), for which he won an Oscar for Best Adapted Screenplay.",<br>
-                "Birth":1975<br>
+                "Birth":"1975-01-01"<br>
             }
         </td>
     </tr>
@@ -76,10 +77,10 @@
         <td>POST</td>
         <td>A JSON object holding data about the user to add, formatted like so: <br>
             {<br>
-                "Username": "Etta"<br>
-                "Password": "pass1234"<br>
-                "Email": "example@example.com"<br>
-                "Birthday": 1993-07-02<br>
+                "Username": "etta" (required)<br>
+                "Password": "pass1234" (required)<br>
+                "Email": "example@example.com" (required)<br>
+                "Birthday": 1993-07-02 (required)<br>
                 "FavoriteMovies": []<br>
             }
         </td>
@@ -96,34 +97,33 @@
         </td>
     </tr>
     <tr style="border: 1px solid black;">
-        <td>Update user's name</td>
-        <td>/users/[ID]</td>
+        <td>Update user's info</td>
+        <td>/users/[Username]</td>
         <td>PUT</td>
         <td>A JSON object holding the data to be updated. Example:<br>
             {<br>
-                _id: ObjectID("1234"),
-                "Username": "EttaRiley"<br>
+                "Username": "Etta2"<br>
             }
         </td>
-        <td>A text message indicating the name that was changed.</td>
+        <td>A JSON object of the user information (See above for example format)</td>
     </tr>
     <tr style="border: 1px solid black;">
         <td>Add movie to user's list of favorites</td>
-        <td>/users/[ID]/[MOVIE-TITLE]</td>
+        <td>/users/[Username]/movies/[MovieID]</td>
         <td>POST</td>
         <td>None</td>
-        <td>A success message indicating the message was changed</td>
+        <td>A JSON object with the user information.</td>
     </tr>
     <tr style="border: 1px solid black;">
         <td>Remove movie from user's list of favorites</td>
-        <td>/users/[ID]/[MOVIE-TITLE]</td>
+        <td>/users/[Username]/movies/[MovieID]</td>
         <td>DELETE</td>
         <td>None</td>
-        <td>A text message indicating whether the movie was successfully removed.</td>
+        <td>A JSON object with the user information.</td>
     </tr>
     <tr style="border: 1px solid black;">
         <td>Remove user</td>
-        <td>/users/[ID]</td>
+        <td>/users/[Username]</td>
         <td>DELETE</td>
         <td>None</td>
         <td>A text message indicating whether the user was successfully deregistered.</td>
