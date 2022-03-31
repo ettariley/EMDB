@@ -8,8 +8,6 @@ const express = require('express'),
 
 const Movies = Models.Movie;
 const Users = Models.User;
-// const Genres = Models.Movie.Genre;
-// const Directors = Models.Director;
 
 const app = express();
 
