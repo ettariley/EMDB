@@ -4,7 +4,9 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     uuid = require('uuid'),
     mongoose = require('mongoose'),
-    Models = require('./models.js');
+    Models = require('./models.js'),
+    cors = require('cors'),
+    { check, validationResult } = require('express-validator');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -23,6 +25,7 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 })
+app.use(cors());
 
 let auth = require('./auth')(app);
 const passport = require('passport');
@@ -78,15 +81,33 @@ app.get('/director/:Name', passport.authenticate('jwt', { session: false }), (re
 
 // CREATE user
 app.post('/users', passport.authenticate('jwt', { session: false }), (req, res) => {    
-    Users.findOne({ Username: req.body.Username })
+    // Validation logic here for request
+    [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
+    check('Password', 'Password is required').isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+    ], (req, res) => {
+
+        // Check validation object for errors
+        let errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+    }
+    
+    let hashedPassword = Users.hashedPassword(req.body.Password);
+    Users.findOne({ Username: req.body.Username }) // Check if user exists
         .then((user) => {
             if (user) {
+                // If found, send response that user already exists
                 return res.status(400).send(req.body.Username + ' already exists.');
             } else {
                 Users
                     .create({
                         Username: req.body.Username,
-                        Password: req.body.Password,
+                        Password: hashedPassword,
                         Email: req.body.Email,
                         Birthday: req.body.Birthday
                     })
@@ -173,6 +194,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 // Listen for requests
-app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+    console.log('Listening on Port ' + port);
 });
