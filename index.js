@@ -82,13 +82,13 @@ app.get('/director/:Name', passport.authenticate('jwt', { session: false }), (re
 });
 
 // CREATE user
-app.post('/users', passport.authenticate('jwt', { session: false }), (req, res) => {    
-    // Validation logic here for request
-    [
-    check('Username', 'Username is required').isLength({min: 5}),
-    check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
-    check('Password', 'Password is required').isEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail()
+app.post('/users', 
+     // Validation logic here for request
+     [
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
+        check('Password', 'Password is required').isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
     ], (req, res) => {
 
         // Check validation object for errors
@@ -97,7 +97,6 @@ app.post('/users', passport.authenticate('jwt', { session: false }), (req, res) 
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
         }
-    }
     
     let hashedPassword = Users.hashedPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username }) // Check if user exists
