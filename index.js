@@ -132,7 +132,6 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail(),
-        check('Birthday', 'Must be a date').isDate()
     ],(req, res) => {
     
         // Check validation object for errors
@@ -141,7 +140,8 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
         }
-
+    
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
         {
             Username: req.body.Username,
