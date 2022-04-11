@@ -126,15 +126,22 @@ app.post('/users',
 });
 
 //UPDATE user name
-app.put('/users/:Username', 
-    passport.authenticate('jwt', { session: false }),
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), 
     [
         check('Username', 'Username is required and must be at least 5 characters').isLength({min: 5}),
         check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail(),
         check('Birthday', 'Must be a date').isDate()
-    ], (req, res) => {
+    ],(req, res) => {
+    
+        // Check validation object for errors
+        let errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+
     Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
         {
             Username: req.body.Username,
