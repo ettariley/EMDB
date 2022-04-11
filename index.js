@@ -27,7 +27,7 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 })
-app.use(cors());
+app.use(cors()); // Allows requests from all origins
 
 let auth = require('./auth')(app);
 const passport = require('passport');
@@ -84,8 +84,8 @@ app.get('/director/:Name', passport.authenticate('jwt', { session: false }), (re
 // CREATE user
 app.post('/users', 
      // Validation logic here for request
-     [
-        check('Username', 'Username is required').isLength({min: 5}),
+    [
+        check('Username', 'Username is required and must be at least 5 characters').isLength({min: 5}),
         check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail()
@@ -126,7 +126,15 @@ app.post('/users',
 });
 
 //UPDATE user name
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put('/users/:Username', 
+    passport.authenticate('jwt', { session: false }),
+    [
+        check('Username', 'Username is required and must be at least 5 characters').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail(),
+        check('Birthday', 'Must be a date').isDate()
+    ], (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
         {
             Username: req.body.Username,
