@@ -82,7 +82,7 @@ app.get('/director/:Name', passport.authenticate('jwt', { session: false }), (re
 });
 
 // READ user info
-app.get('/userdata/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOne({ Username: req.params.Username })
         .then((user) => {
             res.json(user);
