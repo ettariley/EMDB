@@ -13,7 +13,7 @@ const Users = Models.User;
 
 const app = express();
 
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://ettasmoviedb.herokuapp.com/', 'https://ettasmoviedatabase.netlify.app/', 'https://ettasmoviedatabase.netlify.app'];
+// let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://ettasmoviedb.herokuapp.com/', 'https://ettasmoviedatabase.netlify.app/', 'https://ettasmoviedatabase.netlify.app'];
 
 // Connecting Mongoose to DB
 // mongoose.connect('mongodb://localhost:27017/EMDB', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -30,16 +30,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 })
 // Specific origin requests
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            let message = 'The CORS policy for this application does not allow access from origin ' + origin;
-            return callback(new Error(message), false);
-        }
-        return callback(null, true);
-    }
-}));
+app.use(cors());
 
 let auth = require('./auth')(app);
 const passport = require('passport');
