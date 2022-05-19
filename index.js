@@ -13,7 +13,7 @@ const Users = Models.User;
 
 const app = express();
 
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://ettasmoviedb.herokuapp.com/', 'https://ettasmoviedatabase.netlify.app'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://ettasmoviedb.herokuapp.com/', 'https://ettasmoviedatabase.netlify.app/'];
 
 // Connecting Mongoose to DB
 // mongoose.connect('mongodb://localhost:27017/EMDB', { useNewUrlParser: true, useUnifiedTopology: true });
