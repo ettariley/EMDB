@@ -1,4 +1,6 @@
-# EMDB (Server-Side)
+# Etta's Movie Database (EMDB)
+
+## Server Side
 
 Provides users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.
 
@@ -51,3 +53,11 @@ Provides users with access to information about different movies, directors, and
 > The API source code must be deployed to a publicly accessible platform like GitHub.
 > 
 > The API must be deployed to Heroku.
+
+## Relevant Links
+
+[API Documentation](https://ettasmoviedb.herokuapp.com/documentation.html)
+
+[Project Case Study](https://www.ettahaselden.com/case-study) on my Portfolio Site
+
+[EMDB Full-Stack Demo](https://ettasmoviedatabase.netlify.app/)
